@@ -1,36 +1,19 @@
-import { IUsersRepository } from "../../repositories/IUsersRepository";
-import { ICreateUserRequestDTO } from "./CreateUserDTO";
-import { User } from "../../entities/User";
-import { IMailProvider } from "../../providers/IMailProvider";
 
-export class CreateUserUseCase {
-  constructor(
-    private usersRepository: IUsersRepository,
-    private mailProvider: IMailProvider,
-  ) {}
+import { PostgresUsersRepository } from "../../repositories/implementations/PostgresUsersRepository";
+import { CreateUserUseCase } from "./CreateUserUseCase";
+import { CreateUserController } from "./CreateUserController";
+import { MailtrapMailProvider } from "../../providers/implementarions/MailtrapMailProvider";
 
-  async execute(data: ICreateUserRequestDTO) {
-    const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
+const postgresUsersRepository = new PostgresUsersRepository()
+const mailtrapMailProvider = new MailtrapMailProvider()
 
-    if (userAlreadyExists) {
-      throw new Error('User already exists.');
-    }
+const createUserUseCase = new CreateUserUseCase(
+  postgresUsersRepository,
+  mailtrapMailProvider,
+)
 
-    const user = new User(data);
+const createUserController = new CreateUserController(
+  createUserUseCase
+)
 
-    await this.usersRepository.save(user);
-
-    this.mailProvider.sendMail({
-      to: {
-        name: data.name,
-        email: data.email,
-      },
-      from: {
-        name: 'Equipe do Meu App',
-        email: 'equipe@meuapp.com',
-      },
-      subject: 'Seja bem-vindo à plataforma',
-      body: '<p>Você já pode fazer login em nossa plataforma.</p>'
-    })
-  }
-}
+export { createUserUseCase, createUserController }
