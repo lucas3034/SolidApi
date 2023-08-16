@@ -20,3 +20,5 @@ export class DeleteUserController {
     }
   }
 }
+
+export { DeleteUserUseCase };
