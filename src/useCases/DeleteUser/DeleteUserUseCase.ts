@@ -5,12 +5,12 @@ export class DeleteUserUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute(userId: string) {
+  async execute(email: string) {
     
-    const userExists = await this.usersRepository.findById(userId);
+    const userExists = await this.usersRepository.findByEmail(email);
     if (!userExists) {
       throw new Error('User not found.');
     }
-    await this.usersRepository.delete(userId);
+    await this.usersRepository.delete(email);
   }
 }

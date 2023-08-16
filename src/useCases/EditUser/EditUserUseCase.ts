@@ -7,7 +7,7 @@ export class EditUserUseCase {
   ) {}
 
   async execute(data: IEditUserRequestDTO) {
-    const userExists = await this.usersRepository.findById(data.id);
+    const userExists = await this.usersRepository.findByEmail(data.email);
 
     if (!userExists) {
       throw new Error('User not found.');
