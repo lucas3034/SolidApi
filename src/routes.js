@@ -9,11 +9,11 @@ router.post('/users', (request, response) => {
   return createUserController.handle(request, response);
 });
 
-router.delete('/users/:name', (request, response) => {
+router.delete('/users/:id', (request, response) => {
   return deleteUserController.handle(request, response);
 });
 
-router.put('/users/:email', (request, response) => {
+router.put('/users/:id', (request, response) => {
   return editUserController.handle(request, response);
 });
 
