@@ -7,13 +7,12 @@ export class EditUserUseCase {
   ) {}
 
   async execute(data: IEditUserRequestDTO) {
-    const userExists = await this.usersRepository.findByEmail(data.email);
+    const userExists = await this.usersRepository.findById(data.id);
 
     if (!userExists) {
       throw new Error('User not found.');
     }
 
-    // Update the user's data
     if (data.name) {
       userExists.name = data.name;
     }
@@ -25,5 +24,8 @@ export class EditUserUseCase {
     }
 
     await this.usersRepository.save(userExists);
+    const updatedUsers = await this.usersRepository.findAll();
+
+    return updatedUsers;
   }
 }
