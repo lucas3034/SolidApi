@@ -2,6 +2,7 @@ import { IUsersRepository } from "../IUsersRepository";
 import { User } from "../../entities/User";
 
 export class PostgresUsersRepository implements IUsersRepository {
+  
     findAll(): Promise<User[]> {
     throw new Error("Method not implemented.");
   }
@@ -12,6 +13,10 @@ export class PostgresUsersRepository implements IUsersRepository {
     console.log('Found user:', user);
 
     return user;
+  }
+  
+  async getAllUsers(): Promise<User[]> {
+    return this.users.slice(); // Retorna uma cópia da lista de usuários
   }
 
   async findById(id: string): Promise<User | undefined> {
