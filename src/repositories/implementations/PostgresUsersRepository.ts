@@ -16,7 +16,7 @@ export class PostgresUsersRepository implements IUsersRepository {
   }
   
   async getAllUsers(): Promise<User[]> {
-    return this.users.slice(); // Retorna uma cópia da lista de usuários
+    return this.users.slice();
   }
 
   async findById(id: string): Promise<User | undefined> {
