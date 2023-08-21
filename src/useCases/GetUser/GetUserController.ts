@@ -7,16 +7,11 @@ export class GetUserController {
   ) {}
 
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, email, password } = request.body;
 
     try {
-      const user = await this.getUserUseCase.execute({
-        name,
-        email,
-        password
-      });
+      const users = await this.getUserUseCase.execute();
 
-      return response.status(201).json(this.getUserUseCase);
+      return response.status(201).json(users);
     } catch (err) {
       return response.status(400).json({
         message: err.message || 'Unexpected error.'

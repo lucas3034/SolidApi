@@ -7,10 +7,9 @@ export class GetUserUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute(data: IGetUserRequestDTO) {
-
-    const user = new User(data);
-
-    await this.usersRepository.getAllUsers(user);
+  async execute() {
+    const users = this.usersRepository.getAllUsers();
+    console.log(users);
+    return users;
   }
 }

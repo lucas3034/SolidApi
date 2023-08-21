@@ -3,10 +3,10 @@ import { User } from "../../entities/User";
 
 export class PostgresUsersRepository implements IUsersRepository {
   
-    findAll(): Promise<User[]> {
-    throw new Error("Method not implemented.");
+  private users: User[] ;
+  constructor(){
+    this.users =  [];
   }
-  private users: User[] = [];
 
   async findByEmail(email: string): Promise<User> {
     const user = this.users.find(user => user.email === email);
@@ -15,8 +15,9 @@ export class PostgresUsersRepository implements IUsersRepository {
     return user;
   }
   
-  async getAllUsers(): Promise<User[]> {
-    return this.users.slice();
+  getAllUsers(): User[] {
+    console.log(this.users);
+    return this.users;
   }
 
   async findById(id: string): Promise<User | undefined> {
@@ -28,6 +29,7 @@ export class PostgresUsersRepository implements IUsersRepository {
 
   async save(user: User): Promise<void> {
     this.users.push(user);
+    console.log(this.users);
   }
 
   async delete(id: string): Promise<void> {
